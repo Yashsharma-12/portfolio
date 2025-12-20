@@ -35,7 +35,7 @@ final List<ProjectModel> projects = [
   ProjectModel(
     title: "Portfolio",
     description: "Personal portfolio website with interactive star fields, scroll-linked animations, and glassmorphism design.(you are in this project now!)",
-    imagePath: "assets/projects/portfolio.png",
+    imagePath: "assets/projects/Portfolio.png",
     technologies: ["Flutter Web", "Canvas API"],
     link: "#",
     screenshots: [
