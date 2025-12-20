@@ -39,7 +39,6 @@ class _HomeScreenState extends State<HomeScreen> {
   Future<void> _launchURL(String url) async {
     final Uri uri = Uri.parse(url);
 
-    // Redirect mailto to Gmail Web to avoid blank browser tabs on Web
     if (url.contains("mailto:")) {
       final String email = url.replaceFirst("mailto:", "");
       final String gmailWebUrl = "https://mail.google.com/mail/?view=cm&fs=1&to=$email";
@@ -51,7 +50,6 @@ class _HomeScreenState extends State<HomeScreen> {
       }
     }
 
-    // Standard launch for GitHub/LinkedIn/PDFs
     if (await canLaunchUrl(uri)) {
       await launchUrl(uri, mode: LaunchMode.externalApplication);
     } else {
@@ -67,8 +65,14 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    // Screen width for responsive decisions
+    final double screenWidth = MediaQuery.of(context).size.width;
+    final bool isMobile = screenWidth < 800;
+
     return Scaffold(
       backgroundColor: Colors.black,
+      // Add endDrawer for mobile navigation
+      endDrawer: isMobile ? _buildMobileDrawer() : null,
       body: CustomCursor(
         child: Stack(
           children: [
@@ -101,11 +105,12 @@ class _HomeScreenState extends State<HomeScreen> {
                           Container(
                             height: MediaQuery.of(context).size.height - 80,
                             alignment: Alignment.center,
+                            padding: const EdgeInsets.symmetric(horizontal: 20),
                             child: Transform.scale(
                               scale: heroScale,
                               child: Opacity(
                                 opacity: heroOpacity,
-                                child: _buildHeroText(),
+                                child: _buildHeroText(isMobile),
                               ),
                             ),
                           ),
@@ -128,8 +133,12 @@ class _HomeScreenState extends State<HomeScreen> {
                           // --- PROJECTS SECTION ---
                           Padding(
                             key: _projectKey,
-                            padding: const EdgeInsets.only(top: 100, left: 50, right: 50),
-                            child: _buildProjectSection(),
+                            padding: EdgeInsets.only(
+                              top: 100, 
+                              left: isMobile ? 20 : 50, 
+                              right: isMobile ? 20 : 50
+                            ),
+                            child: _buildProjectSection(isMobile),
                           ),
 
                           const SizedBox(height: 150),
@@ -152,7 +161,7 @@ class _HomeScreenState extends State<HomeScreen> {
               child: NavBar(
                 onAboutTap: () => _scrollToSection(_aboutKey),
                 onProjectTap: () => _scrollToSection(_projectKey),
-                onResumeTap: () => _launchURL('https://your-resume-link.pdf'),
+                onResumeTap: () => _launchURL('https://Yashsharma-12.github.io/portfolio/resume.pdf'),
               ),
             ),
           ],
@@ -161,7 +170,50 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  // --- FOOTER WITH COLORED LOCAL ICONS ---
+  // Mobile Navigation Drawer
+  Widget _buildMobileDrawer() {
+    return Drawer(
+      backgroundColor: Colors.black.withOpacity(0.9),
+      child: Column(
+        children: [
+          const DrawerHeader(
+            child: Center(
+              child: Text(
+                "YASH",
+                style: TextStyle(
+                  color: Color(0xFFEC5334),
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          ),
+          ListTile(
+            title: const Text("ABOUT", style: TextStyle(color: Colors.white)),
+            onTap: () {
+              Navigator.pop(context);
+              _scrollToSection(_aboutKey);
+            },
+          ),
+          ListTile(
+            title: const Text("PROJECTS", style: TextStyle(color: Colors.white)),
+            onTap: () {
+              Navigator.pop(context);
+              _scrollToSection(_projectKey);
+            },
+          ),
+          ListTile(
+            title: const Text("RESUME", style: TextStyle(color: Colors.white)),
+            onTap: () {
+              Navigator.pop(context);
+              _launchURL('https://your-resume-link.pdf');
+            },
+          ),
+        ],
+      ),
+    );
+  }
+
   Widget _buildFooter() {
     return Container(
       width: double.infinity,
@@ -220,21 +272,21 @@ class _HomeScreenState extends State<HomeScreen> {
           width: 28,
           height: 28,
           fit: BoxFit.contain,
-          color: null, // Shows original colored icons
+          color: null,
         ),
       ),
     );
   }
 
-  Widget _buildProjectSection() {
+  Widget _buildProjectSection(bool isMobile) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text(
+        Text(
           "Featured Projects",
           style: TextStyle(
             color: Colors.white,
-            fontSize: 32,
+            fontSize: isMobile ? 26 : 32,
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -258,29 +310,29 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Widget _buildHeroText() {
+  Widget _buildHeroText(bool isMobile) {
     return Column(
       mainAxisSize: MainAxisSize.min,
       children: [
         RichText(
           textAlign: TextAlign.center,
-          text: const TextSpan(
+          text: TextSpan(
             style: TextStyle(
-              fontSize: 60,
+              fontSize: isMobile ? 36 : 60, // Smaller font for phones
               color: Colors.white,
               height: 1.2,
               fontFamily: 'Georgia',
             ),
             children: [
-              TextSpan(text: "Hi! I'm "),
-              TextSpan(
+              const TextSpan(text: "Hi! I'm "),
+              const TextSpan(
                 text: "Yash",
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   color: Color(0xFFEC5334),
                 ),
               ),
-              TextSpan(text: ".\nA creative Frontend Developer."),
+              TextSpan(text: isMobile ? ".\nA Flutter Developer." : ".\nA creative Frontend Developer."),
             ],
           ),
         ),

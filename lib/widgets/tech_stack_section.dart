@@ -10,17 +10,22 @@ class TechStackSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final double screenWidth = MediaQuery.of(context).size.width;
+    final bool isMobile = screenWidth < 600;
 
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 80),
+      // Reduce padding for mobile screens
+      padding: EdgeInsets.symmetric(
+        horizontal: isMobile ? 20 : 50, 
+        vertical: 80
+      ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
+          Text(
             "Core Tech Stack",
             style: TextStyle(
               color: Colors.white, 
-              fontSize: 32, 
+              fontSize: isMobile ? 26 : 32, // Smaller title on mobile
               fontWeight: FontWeight.bold, 
               letterSpacing: 1.5
             ),
@@ -30,11 +35,11 @@ class TechStackSection extends StatelessWidget {
 
           const SizedBox(height: 120),
 
-          const Text(
+          Text(
             "Professional Tools",
             style: TextStyle(
               color: Colors.white, 
-              fontSize: 32, 
+              fontSize: isMobile ? 26 : 32, // Smaller title on mobile
               fontWeight: FontWeight.bold, 
               letterSpacing: 1.5
             ),
@@ -47,15 +52,28 @@ class TechStackSection extends StatelessWidget {
   }
 
   Widget _buildGrid(BuildContext context, List<TechModel> list, double screenWidth, {required double baseTrigger}) {
+    // Determine column count based on width
+    int crossAxisCount;
+    if (screenWidth > 1200) {
+      crossAxisCount = 4;
+    } else if (screenWidth > 800) {
+      crossAxisCount = 3;
+    } else if (screenWidth > 500) {
+      crossAxisCount = 2;
+    } else {
+      crossAxisCount = 1; // Single column for very small phones
+    }
+
     return GridView.builder(
       shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
       itemCount: list.length,
       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: screenWidth > 1200 ? 4 : (screenWidth > 800 ? 3 : 2),
-        crossAxisSpacing: 30,
-        mainAxisSpacing: 30,
-        childAspectRatio: 3.0, 
+        crossAxisCount: crossAxisCount,
+        crossAxisSpacing: 20,
+        mainAxisSpacing: 20,
+        // Aspect ratio needs to be closer to 1.5 - 2.0 on mobile to avoid squishing text
+        childAspectRatio: screenWidth < 500 ? 2.5 : 3.0, 
       ),
       itemBuilder: (context, index) => TechCard(
         name: list[index].name,

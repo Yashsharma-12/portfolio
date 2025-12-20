@@ -1,4 +1,4 @@
-import 'dart:ui'; // Required for BackdropFilter
+import 'dart:ui';
 import 'package:flutter/material.dart';
 
 class NavBar extends StatelessWidget {
@@ -15,15 +15,21 @@ class NavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // Determine if we are on a small screen
+    final double width = MediaQuery.of(context).size.width;
+    final bool isMobile = width < 800;
+
     return ClipRRect(
       child: BackdropFilter(
-        // This creates the frosted glass effect as you scroll
         filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 300),
-          padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+          // Reduce horizontal padding on mobile
+          padding: EdgeInsets.symmetric(
+            horizontal: isMobile ? 20 : 50, 
+            vertical: 20
+          ),
           decoration: BoxDecoration(
-            // Use a very light opacity (0.05 to 0.1) for true transparency
             color: Colors.black.withOpacity(0.1),
             border: const Border(
               bottom: BorderSide(color: Colors.white10, width: 1),
@@ -43,16 +49,25 @@ class NavBar extends StatelessWidget {
                 ),
               ),
               
-              // Nav Buttons
-              Row(
-                children: [
-                  _navButton("About", onAboutTap),
-                  const SizedBox(width: 30),
-                  _navButton("Projects", onProjectTap),
-                  const SizedBox(width: 30),
-                  _navButton("Resume", onResumeTap, isSpecial: true),
-                ],
-              ),
+              // Conditional Rendering: Hamburger for Mobile, Buttons for Web
+              if (isMobile)
+                IconButton(
+                  icon: const Icon(Icons.menu, color: Colors.white, size: 28),
+                  onPressed: () {
+                    // This opens the endDrawer defined in HomeScreen
+                    Scaffold.of(context).openEndDrawer();
+                  },
+                )
+              else
+                Row(
+                  children: [
+                    _navButton("About", onAboutTap),
+                    const SizedBox(width: 30),
+                    _navButton("Projects", onProjectTap),
+                    const SizedBox(width: 30),
+                    _navButton("Resume", onResumeTap, isSpecial: true),
+                  ],
+                ),
             ],
           ),
         ),
