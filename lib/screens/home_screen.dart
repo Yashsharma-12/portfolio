@@ -206,7 +206,7 @@ class _HomeScreenState extends State<HomeScreen> {
             title: const Text("RESUME", style: TextStyle(color: Colors.white)),
             onTap: () {
               Navigator.pop(context);
-              _launchURL('https://your-resume-link.pdf');
+              _launchURL('https://Yashsharma-12.github.io/portfolio/resume.pdf');
             },
           ),
         ],

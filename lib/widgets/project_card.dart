@@ -60,13 +60,16 @@ class _ProjectCardState extends State<ProjectCard> {
 
   @override
   Widget build(BuildContext context) {
+    final double width = MediaQuery.of(context).size.width;
+    final bool isMobile = width < 800; // Breakpoint for mobile layout
+
     return MouseRegion(
       onEnter: (_) => setState(() => isHovered = true),
       onExit: (_) => setState(() => isHovered = false),
       child: AnimatedContainer(
         duration: const Duration(milliseconds: 400),
-        margin: const EdgeInsets.only(bottom: 100), // Increased spacing between cards
-        padding: const EdgeInsets.only(left: 30), // Space for the indicator line
+        margin: const EdgeInsets.only(bottom: 100),
+        padding: EdgeInsets.only(left: isMobile ? 15 : 30),
         decoration: BoxDecoration(
           border: Border(
             left: BorderSide(
@@ -75,79 +78,122 @@ class _ProjectCardState extends State<ProjectCard> {
             ),
           ),
         ),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            // --- LEFT SIDE: PROJECT LOGO ---
-            Expanded(
-              flex: 2,
-              child: Container(
-                height: 400, // Reduced height for a cleaner look
-                alignment: Alignment.center,
-                child: AnimatedScale(
-                  scale: isHovered ? 1.05 : 1.0,
-                  duration: const Duration(milliseconds: 500),
-                  child: Padding(
-                    padding: const EdgeInsets.all(20.0),
-                    child: Image.asset(widget.imagePath, fit: BoxFit.contain),
-                  ),
-                ),
-              ),
-            ),
+        child: isMobile ? _buildMobileLayout() : _buildDesktopLayout(),
+      ),
+    );
+  }
 
-            // --- RIGHT SIDE: INFO & SCREENSHOTS ---
-            Expanded(
-              flex: 4,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 40.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    // --- HYPERLINKED TITLE ---
-                    MouseRegion(
-                      cursor: SystemMouseCursors.click,
-                      onEnter: (_) => setState(() => isTitleHovered = true),
-                      onExit: (_) => setState(() => isTitleHovered = false),
-                      child: GestureDetector(
-                        onTap: _launchURL,
-                        child: AnimatedDefaultTextStyle(
-                          duration: const Duration(milliseconds: 200),
-                          style: TextStyle(
-                            color: isTitleHovered ? const Color(0xFFEC5334) : Colors.white,
-                            fontSize: 38, // Slightly larger title
-                            fontWeight: FontWeight.bold,
-                            fontFamily: 'Georgia', // Matching your Hero/About style
-                            decoration: isTitleHovered ? TextDecoration.underline : TextDecoration.none,
-                            decorationColor: const Color(0xFFEC5334),
-                          ),
-                          child: Text(widget.title),
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 20),
-                    Text(
-                      widget.description,
-                      style: TextStyle(
-                        color: Colors.white.withOpacity(0.7),
-                        fontSize: 18,
-                        height: 1.6,
-                      ),
-                    ),
-                    const SizedBox(height: 30),
-                    Wrap(
-                      spacing: 12,
-                      runSpacing: 12,
-                      children: widget.tech.map((t) => _buildTechTag(t)).toList(),
-                    ),
-                    const SizedBox(height: 40),
-                    if (widget.screenshots.isNotEmpty) _buildScreenshotList(),
-                  ],
-                ),
-              ),
+  // --- MOBILE LAYOUT (Vertical) ---
+  Widget _buildMobileLayout() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        _buildTitle(),
+        const SizedBox(height: 20),
+        _buildMainLogo(height: 250),
+        const SizedBox(height: 20),
+        _buildDescription(),
+        const SizedBox(height: 20),
+        _buildTechStack(),
+        const SizedBox(height: 30),
+        if (widget.screenshots.isNotEmpty) ...[
+          const Text(
+            "SCREENSHOTS",
+            style: TextStyle(
+              color: Color(0xFFEC5334),
+              fontSize: 12,
+              fontWeight: FontWeight.bold,
+              letterSpacing: 2,
             ),
-          ],
+          ),
+          const SizedBox(height: 15),
+          _buildVerticalScreenshotList(),
+        ]
+      ],
+    );
+  }
+
+  // --- DESKTOP LAYOUT (Horizontal Row) ---
+  Widget _buildDesktopLayout() {
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Expanded(flex: 2, child: _buildMainLogo(height: 400)),
+        Expanded(
+          flex: 4,
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 40.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _buildTitle(),
+                const SizedBox(height: 20),
+                _buildDescription(),
+                const SizedBox(height: 30),
+                _buildTechStack(),
+                const SizedBox(height: 40),
+                if (widget.screenshots.isNotEmpty) _buildHorizontalScreenshotList(),
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  // --- SUB-WIDGETS ---
+
+  Widget _buildTitle() {
+    return MouseRegion(
+      cursor: SystemMouseCursors.click,
+      onEnter: (_) => setState(() => isTitleHovered = true),
+      onExit: (_) => setState(() => isTitleHovered = false),
+      child: GestureDetector(
+        onTap: _launchURL,
+        child: AnimatedDefaultTextStyle(
+          duration: const Duration(milliseconds: 200),
+          style: TextStyle(
+            color: isTitleHovered ? const Color(0xFFEC5334) : Colors.white,
+            fontSize: MediaQuery.of(context).size.width < 600 ? 28 : 38,
+            fontWeight: FontWeight.bold,
+            fontFamily: 'Georgia',
+            decoration: isTitleHovered ? TextDecoration.underline : TextDecoration.none,
+            decorationColor: const Color(0xFFEC5334),
+          ),
+          child: Text(widget.title),
         ),
       ),
+    );
+  }
+
+  Widget _buildMainLogo({required double height}) {
+    return Container(
+      height: height,
+      alignment: Alignment.centerLeft,
+      child: AnimatedScale(
+        scale: isHovered ? 1.05 : 1.0,
+        duration: const Duration(milliseconds: 500),
+        child: Image.asset(widget.imagePath, fit: BoxFit.contain),
+      ),
+    );
+  }
+
+  Widget _buildDescription() {
+    return Text(
+      widget.description,
+      style: TextStyle(
+        color: Colors.white.withOpacity(0.7),
+        fontSize: 16,
+        height: 1.6,
+      ),
+    );
+  }
+
+  Widget _buildTechStack() {
+    return Wrap(
+      spacing: 12,
+      runSpacing: 12,
+      children: widget.tech.map((t) => _buildTechTag(t)).toList(),
     );
   }
 
@@ -156,21 +202,22 @@ class _ProjectCardState extends State<ProjectCard> {
       padding: const EdgeInsets.symmetric(horizontal: 14, vertical: 8),
       decoration: BoxDecoration(
         color: Colors.white.withOpacity(0.05),
-        borderRadius: BorderRadius.circular(30), // Pill shape to match social buttons
+        borderRadius: BorderRadius.circular(30),
         border: Border.all(color: Colors.white10),
       ),
       child: Text(
         t,
         style: const TextStyle(
-          color: Color(0xFFEC5334), // Accent color for tech text
-          fontSize: 13,
+          color: Color(0xFFEC5334),
+          fontSize: 12,
           fontWeight: FontWeight.w600,
         ),
       ),
     );
   }
 
-  Widget _buildScreenshotList() {
+  // Used for Desktop
+  Widget _buildHorizontalScreenshotList() {
     return SizedBox(
       height: 250,
       child: ListView.separated(
@@ -178,26 +225,37 @@ class _ProjectCardState extends State<ProjectCard> {
         physics: const BouncingScrollPhysics(),
         itemCount: widget.screenshots.length,
         separatorBuilder: (context, index) => const SizedBox(width: 20),
-        itemBuilder: (context, index) {
-          return InkWell(
-            onTap: () => _showFullScreenImage(context, widget.screenshots[index]),
-            borderRadius: BorderRadius.circular(16),
-            child: AnimatedContainer(
-              duration: const Duration(milliseconds: 300),
-              width: 140,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(16),
-                border: Border.all(
-                  color: isHovered ? Colors.white24 : Colors.transparent,
-                ),
-              ),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(16),
-                child: Image.asset(widget.screenshots[index], fit: BoxFit.cover),
-              ),
-            ),
-          );
-        },
+        itemBuilder: (context, index) => _screenshotItem(widget.screenshots[index], width: 140),
+      ),
+    );
+  }
+
+  // Used for Mobile
+  Widget _buildVerticalScreenshotList() {
+    return Column(
+      children: widget.screenshots.map((s) => Padding(
+        padding: const EdgeInsets.only(bottom: 20),
+        child: _screenshotItem(s, width: double.infinity),
+      )).toList(),
+    );
+  }
+
+  Widget _screenshotItem(String path, {required double width}) {
+    return InkWell(
+      onTap: () => _showFullScreenImage(context, path),
+      borderRadius: BorderRadius.circular(16),
+      child: Container(
+        width: width,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(16),
+          border: Border.all(
+            color: isHovered ? Colors.white24 : Colors.transparent,
+          ),
+        ),
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(16),
+          child: Image.asset(path, fit: BoxFit.cover),
+        ),
       ),
     );
   }
