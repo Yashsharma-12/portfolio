@@ -9,6 +9,7 @@ class ProjectCard extends StatefulWidget {
   final List<String> tech;
   final List<String> screenshots;
   final String link;
+  final bool isLaptop; // Added to distinguish between laptop and phone dimensions
 
   const ProjectCard({
     super.key,
@@ -18,6 +19,7 @@ class ProjectCard extends StatefulWidget {
     required this.tech,
     required this.link,
     this.screenshots = const [],
+    this.isLaptop = false, // Defaults to false for phone projects
   });
 
   @override
@@ -61,7 +63,7 @@ class _ProjectCardState extends State<ProjectCard> {
   @override
   Widget build(BuildContext context) {
     final double width = MediaQuery.of(context).size.width;
-    final bool isMobile = width < 800;
+    final bool isMobile = width < 800; // Breakpoint for mobile layout
 
     return MouseRegion(
       onEnter: (_) => setState(() => isHovered = true),
@@ -83,7 +85,7 @@ class _ProjectCardState extends State<ProjectCard> {
     );
   }
 
-  // --- MOBILE LAYOUT (Vertical Stack with Horizontal Gallery) ---
+  // --- MOBILE LAYOUT (Vertical) ---
   Widget _buildMobileLayout() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -107,14 +109,13 @@ class _ProjectCardState extends State<ProjectCard> {
             ),
           ),
           const SizedBox(height: 15),
-          // Changed to horizontal list for mobile
           _buildHorizontalScreenshotList(isMobile: true),
         ]
       ],
     );
   }
 
-  // --- DESKTOP LAYOUT ---
+  // --- DESKTOP LAYOUT (Horizontal Row) ---
   Widget _buildDesktopLayout() {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -217,11 +218,11 @@ class _ProjectCardState extends State<ProjectCard> {
     );
   }
 
-  // --- UPDATED HORIZONTAL LIST FOR BOTH MOBILE & DESKTOP ---
+  // --- UPDATED HORIZONTAL LIST WITH ADAPTIVE HEIGHT ---
   Widget _buildHorizontalScreenshotList({required bool isMobile}) {
     return SizedBox(
-      // Taller height for mobile to see details, shorter for desktop
-      height: isMobile ? 300 : 250, 
+      // Height increases for laptop screenshots to maintain aspect ratio
+      height: widget.isLaptop ? (isMobile ? 220 : 250) : (isMobile ? 300 : 250), 
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
         physics: const BouncingScrollPhysics(),
@@ -230,8 +231,8 @@ class _ProjectCardState extends State<ProjectCard> {
         itemBuilder: (context, index) {
           return _screenshotItem(
             widget.screenshots[index], 
-            // Wider cards for mobile to make them easy to see
-            width: isMobile ? 180 : 140, 
+            // Laptop screenshots are significantly wider
+            width: widget.isLaptop ? (isMobile ? 300 : 400) : (isMobile ? 180 : 140), 
           );
         },
       ),
@@ -252,7 +253,11 @@ class _ProjectCardState extends State<ProjectCard> {
         ),
         child: ClipRRect(
           borderRadius: BorderRadius.circular(16),
-          child: Image.asset(path, fit: BoxFit.cover),
+          child: Image.asset(
+            path, 
+            // Cover for laptop screenshots to fill the horizontal card
+            fit: widget.isLaptop ? BoxFit.cover : BoxFit.contain, 
+          ),
         ),
       ),
     );

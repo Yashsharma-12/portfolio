@@ -4,7 +4,8 @@ class ProjectModel {
   final String imagePath;
   final List<String> technologies;
   final String link;
-  final List<String>? screenshots; 
+  final List<String>? screenshots;
+  final bool isLaptop; // Added to handle different dimensions
 
   ProjectModel({
     required this.title, 
@@ -13,6 +14,7 @@ class ProjectModel {
     required this.technologies,
     required this.link,
     this.screenshots,
+    this.isLaptop = false, // Defaults to false (mobile/phone style)
   });
 }
 
@@ -23,7 +25,7 @@ final List<ProjectModel> projects = [
     imagePath: "assets/projects/arsenal.jpeg", 
     technologies: ["Flutter", "Firebase", "MongoDB", "Node.js", "REST API"],
     link: "https://github.com/Yashsharma-12/the-armoury-flutter",
-    // IMPORTANT: Ensure the folder name on your disk matches 'assets/screenshorts/' exactly
+    isLaptop: false, // Phone dimensions
     screenshots: [
       "assets/screenshorts/login.jpeg",
       "assets/screenshorts/homepage.jpeg",
@@ -34,12 +36,25 @@ final List<ProjectModel> projects = [
   ),
   ProjectModel(
     title: "Portfolio",
-    description: "Personal portfolio website with interactive star fields, scroll-linked animations, and glassmorphism design.(you are in this project now!)",
+    description: "Personal portfolio website with interactive star fields, scroll-linked animations, and glassmorphism design.",
     imagePath: "assets/projects/Portfolio.png",
     technologies: ["Flutter Web", "Canvas API"],
     link: "#",
+    isLaptop: true, // Portfolio is viewed on a browser
     screenshots: [
       "assets/screenshorts/homescreen.png",
-    ], // Passing empty list instead of null is safer for ListView
+    ],
+  ),
+  ProjectModel(
+    title: "SnapBrief (Text Summarizer)",
+    description: "SnapBrief is an AI-powered document intelligence platform designed to conquer information overload. transform dense text, PDFs, and Word documents into instant, actionable summaries.",
+    imagePath: "assets/projects/snapbrief.png", 
+    technologies: ["Next.js", "tailwind CSS", "Gemini 2.5"],
+    link: "https://github.com/Yashsharma-12/snap-brief",
+    isLaptop: true, // Laptop dimensions for web app screenshots
+    screenshots: [
+      "assets/screenshorts/summary_page.png",
+      "assets/screenshorts/history_page.png",
+    ],
   ),
 ];
