@@ -61,7 +61,7 @@ class _ProjectCardState extends State<ProjectCard> {
   @override
   Widget build(BuildContext context) {
     final double width = MediaQuery.of(context).size.width;
-    final bool isMobile = width < 800; // Breakpoint for mobile layout
+    final bool isMobile = width < 800;
 
     return MouseRegion(
       onEnter: (_) => setState(() => isHovered = true),
@@ -83,7 +83,7 @@ class _ProjectCardState extends State<ProjectCard> {
     );
   }
 
-  // --- MOBILE LAYOUT (Vertical) ---
+  // --- MOBILE LAYOUT (Vertical Stack with Horizontal Gallery) ---
   Widget _buildMobileLayout() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -107,13 +107,14 @@ class _ProjectCardState extends State<ProjectCard> {
             ),
           ),
           const SizedBox(height: 15),
-          _buildVerticalScreenshotList(),
+          // Changed to horizontal list for mobile
+          _buildHorizontalScreenshotList(isMobile: true),
         ]
       ],
     );
   }
 
-  // --- DESKTOP LAYOUT (Horizontal Row) ---
+  // --- DESKTOP LAYOUT ---
   Widget _buildDesktopLayout() {
     return Row(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -132,7 +133,7 @@ class _ProjectCardState extends State<ProjectCard> {
                 const SizedBox(height: 30),
                 _buildTechStack(),
                 const SizedBox(height: 40),
-                if (widget.screenshots.isNotEmpty) _buildHorizontalScreenshotList(),
+                if (widget.screenshots.isNotEmpty) _buildHorizontalScreenshotList(isMobile: false),
               ],
             ),
           ),
@@ -216,27 +217,24 @@ class _ProjectCardState extends State<ProjectCard> {
     );
   }
 
-  // Used for Desktop
-  Widget _buildHorizontalScreenshotList() {
+  // --- UPDATED HORIZONTAL LIST FOR BOTH MOBILE & DESKTOP ---
+  Widget _buildHorizontalScreenshotList({required bool isMobile}) {
     return SizedBox(
-      height: 250,
+      // Taller height for mobile to see details, shorter for desktop
+      height: isMobile ? 300 : 250, 
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
         physics: const BouncingScrollPhysics(),
         itemCount: widget.screenshots.length,
         separatorBuilder: (context, index) => const SizedBox(width: 20),
-        itemBuilder: (context, index) => _screenshotItem(widget.screenshots[index], width: 140),
+        itemBuilder: (context, index) {
+          return _screenshotItem(
+            widget.screenshots[index], 
+            // Wider cards for mobile to make them easy to see
+            width: isMobile ? 180 : 140, 
+          );
+        },
       ),
-    );
-  }
-
-  // Used for Mobile
-  Widget _buildVerticalScreenshotList() {
-    return Column(
-      children: widget.screenshots.map((s) => Padding(
-        padding: const EdgeInsets.only(bottom: 20),
-        child: _screenshotItem(s, width: double.infinity),
-      )).toList(),
     );
   }
 

@@ -69,104 +69,105 @@ class _HomeScreenState extends State<HomeScreen> {
     final double screenWidth = MediaQuery.of(context).size.width;
     final bool isMobile = screenWidth < 800;
 
+    // Define the Main Content Stack to avoid code repetition
+    Widget mainContent = Stack(
+      children: [
+        // Layer 1: Fixed Background Star Field
+        const StarField(),
+
+        // Layer 2: Scrollable Content
+        SingleChildScrollView(
+          controller: _scrollController,
+          child: Column(
+            children: [
+              const SizedBox(height: 80),
+
+              AnimatedBuilder(
+                animation: _scrollController,
+                builder: (context, child) {
+                  double offset = _scrollController.hasClients ? _scrollController.offset : 0;
+
+                  // Hero Logic
+                  double heroScale = (1.0 - (offset / 400)).clamp(0.0, 1.0);
+                  double heroOpacity = (1.0 - (offset / 300)).clamp(0.0, 1.0);
+
+                  // About Logic
+                  double aboutScale = (0.5 + (offset / 800)).clamp(0.5, 1.0);
+                  double aboutOpacity = (offset / 400).clamp(0.0, 1.0);
+
+                  return Column(
+                    children: [
+                      // --- HERO SECTION ---
+                      Container(
+                        height: MediaQuery.of(context).size.height - 80,
+                        alignment: Alignment.center,
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
+                        child: Transform.scale(
+                          scale: heroScale,
+                          child: Opacity(
+                            opacity: heroOpacity,
+                            child: _buildHeroText(isMobile),
+                          ),
+                        ),
+                      ),
+
+                      // --- ABOUT ME SECTION ---
+                      Padding(
+                        key: _aboutKey,
+                        padding: const EdgeInsets.only(top: 100), 
+                        child: AboutNote(
+                          scale: aboutScale,
+                          opacity: aboutOpacity,
+                        ),
+                      ),
+
+                      const SizedBox(height: 120),
+
+                      // --- TECH STACK SECTION ---
+                      TechStackSection(scrollOffset: offset),
+
+                      // --- PROJECTS SECTION ---
+                      Padding(
+                        key: _projectKey,
+                        padding: EdgeInsets.only(
+                          top: 100, 
+                          left: isMobile ? 20 : 50, 
+                          right: isMobile ? 20 : 50
+                        ),
+                        child: _buildProjectSection(isMobile),
+                      ),
+
+                      const SizedBox(height: 150),
+
+                      // --- MINIMAL FOOTER ---
+                      _buildFooter(),
+                    ],
+                  );
+                },
+              ),
+            ],
+          ),
+        ),
+
+        // Layer 3: Fixed Transparent NavBar
+        Positioned(
+          top: 0,
+          left: 0,
+          right: 0,
+          child: NavBar(
+            onAboutTap: () => _scrollToSection(_aboutKey),
+            onProjectTap: () => _scrollToSection(_projectKey),
+            onResumeTap: () => _launchURL('https://Yashsharma-12.github.io/portfolio/resume.pdf'),
+          ),
+        ),
+      ],
+    );
+
     return Scaffold(
       backgroundColor: Colors.black,
-      // Add endDrawer for mobile navigation
       endDrawer: isMobile ? _buildMobileDrawer() : null,
-      body: CustomCursor(
-        child: Stack(
-          children: [
-            // Layer 1: Fixed Background Star Field
-            const StarField(),
-
-            // Layer 2: Scrollable Content
-            SingleChildScrollView(
-              controller: _scrollController,
-              child: Column(
-                children: [
-                  const SizedBox(height: 80),
-
-                  AnimatedBuilder(
-                    animation: _scrollController,
-                    builder: (context, child) {
-                      double offset = _scrollController.hasClients ? _scrollController.offset : 0;
-
-                      // Hero Logic
-                      double heroScale = (1.0 - (offset / 400)).clamp(0.0, 1.0);
-                      double heroOpacity = (1.0 - (offset / 300)).clamp(0.0, 1.0);
-
-                      // About Logic
-                      double aboutScale = (0.5 + (offset / 800)).clamp(0.5, 1.0);
-                      double aboutOpacity = (offset / 400).clamp(0.0, 1.0);
-
-                      return Column(
-                        children: [
-                          // --- HERO SECTION ---
-                          Container(
-                            height: MediaQuery.of(context).size.height - 80,
-                            alignment: Alignment.center,
-                            padding: const EdgeInsets.symmetric(horizontal: 20),
-                            child: Transform.scale(
-                              scale: heroScale,
-                              child: Opacity(
-                                opacity: heroOpacity,
-                                child: _buildHeroText(isMobile),
-                              ),
-                            ),
-                          ),
-
-                          // --- ABOUT ME SECTION ---
-                          Padding(
-                            key: _aboutKey,
-                            padding: const EdgeInsets.only(top: 100), 
-                            child: AboutNote(
-                              scale: aboutScale,
-                              opacity: aboutOpacity,
-                            ),
-                          ),
-
-                          const SizedBox(height: 120),
-
-                          // --- TECH STACK SECTION ---
-                          TechStackSection(scrollOffset: offset),
-
-                          // --- PROJECTS SECTION ---
-                          Padding(
-                            key: _projectKey,
-                            padding: EdgeInsets.only(
-                              top: 100, 
-                              left: isMobile ? 20 : 50, 
-                              right: isMobile ? 20 : 50
-                            ),
-                            child: _buildProjectSection(isMobile),
-                          ),
-
-                          const SizedBox(height: 150),
-
-                          // --- MINIMAL FOOTER ---
-                          _buildFooter(),
-                        ],
-                      );
-                    },
-                  ),
-                ],
-              ),
-            ),
-
-            // Layer 3: Fixed Transparent NavBar
-            Positioned(
-              top: 0,
-              left: 0,
-              right: 0,
-              child: NavBar(
-                onAboutTap: () => _scrollToSection(_aboutKey),
-                onProjectTap: () => _scrollToSection(_projectKey),
-                onResumeTap: () => _launchURL('https://Yashsharma-12.github.io/portfolio/resume.pdf'),
-              ),
-            ),
-          ],
-        ),
-      ),
+      // Conditionally disable the CustomCursor for mobile/touch screens
+      body: isMobile ? mainContent : CustomCursor(child: mainContent),
     );
   }
 
@@ -318,7 +319,7 @@ class _HomeScreenState extends State<HomeScreen> {
           textAlign: TextAlign.center,
           text: TextSpan(
             style: TextStyle(
-              fontSize: isMobile ? 36 : 60, // Smaller font for phones
+              fontSize: isMobile ? 36 : 60, // Scaled for mobile
               color: Colors.white,
               height: 1.2,
               fontFamily: 'Georgia',
