@@ -48,7 +48,7 @@ final List<ProjectModel> projects = [
   ProjectModel(
     title: "SnapBrief (Text Summarizer)",
     description: "SnapBrief is an AI-powered document intelligence platform designed to conquer information overload. transform dense text, PDFs, and Word documents into instant, actionable summaries.",
-    imagePath: "assets/projects/snapbrief.png", 
+    imagePath: "assets/projects/SnapBrief.png", 
     technologies: ["Next.js", "tailwind CSS", "Gemini 2.5"],
     link: "https://github.com/Yashsharma-12/snap-brief",
     isLaptop: true, // Laptop dimensions for web app screenshots
