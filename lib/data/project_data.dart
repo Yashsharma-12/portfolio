@@ -36,7 +36,7 @@ final List<ProjectModel> projects = [
   ),
   ProjectModel(
     title: "Portfolio",
-    description: "Personal portfolio website with interactive star fields, scroll-linked animations, and glassmorphism design.",
+    description: "Creative Developer Portfolio A high-performance, responsive web application built with Flutter Web. It features interactive custom-painted canvas animations, scroll-linked transitions using AnimatedBuilder, and a mobile-optimized dynamic gallery with adaptive device framing. Designed with a focus on Glassmorphism and fluid user experience.",
     imagePath: "assets/projects/Portfolio.png",
     technologies: ["Flutter Web", "Canvas API"],
     link: "#",
