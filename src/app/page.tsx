@@ -15,7 +15,7 @@ if (typeof window !== "undefined") {
 }
 
 const accentColor = "#CD3232";
- 
+
 // --- Portfolio Data ---
 const stats = [
   { label: 'Specialty', value: 'Full', unit: 'Stack', caption: 'Frontend, Backend & Mobile Applications.' },
@@ -68,14 +68,12 @@ const PageContent = ({
   onDotClick,
   openSkillIdx,
   onToggleSkill,
-  showTooltip = false,
   isMaskLayer = false
 }: {
   inverted?: boolean,
   onDotClick?: () => void,
   openSkillIdx?: number | null,
   onToggleSkill?: (idx: number) => void,
-  showTooltip?: boolean,
   isMaskLayer?: boolean
 }) => {
 
@@ -129,12 +127,12 @@ const PageContent = ({
           <h1 className={`font-sans font-black text-[clamp(56px,11vw,200px)] leading-[0.88] tracking-tight m-0 ${inverted ? 'text-black' : 'bg-gradient-to-r from-green-400 to-green-600 bg-clip-text text-transparent'}`}>
             YASH<br />
             <span className={inverted ? 'text-black' : 'text-[#F5F5F5]/35'}>SHARMA</span><span id={onDotClick ? "easter-egg-dot" : undefined} onClick={onDotClick} className={`relative inline-block cursor-pointer ${inverted ? 'text-black' : 'text-[#CD3232]'}`}>.
-              {showTooltip && isMaskLayer && (
+              {isMaskLayer && (
                 <div
-                  className={`absolute top-0 left-full ml-4 -translate-y-1/2 pointer-events-none z-[100] font-mono text-[11px] tracking-widest uppercase px-3 py-1.5 rounded-sm whitespace-nowrap transition-opacity duration-300 ${inverted ? 'bg-[#CD3232] text-white' : 'bg-white text-black'}`}
+                  className={`absolute bottom-[15%] left-full ml-4 pointer-events-none z-[100] font-mono text-[11px] tracking-widest uppercase px-3 py-1.5 rounded-sm whitespace-nowrap transition-opacity duration-300 bg-black text-white`}
                 >
                   Click me
-                  <div className="absolute top-1/2 -left-1.5 -translate-y-1/2 w-0 h-0 border-t-[6px] border-b-[6px] border-r-[8px] border-t-transparent border-b-transparent border-r-white"></div>
+                  <div className={`absolute top-1/2 -left-1.5 -translate-y-1/2 w-0 h-0 border-t-[6px] border-b-[6px] border-r-[8px] border-t-transparent border-b-transparent border-r-black`}></div>
                 </div>
               )}
             </span>
@@ -174,8 +172,11 @@ const PageContent = ({
       </section>
 
       {/* --- 02 · ABOUT --- */}
-      <section id="about" className={`px-10 py-[120px] relative border-b ${inverted ? 'bg-transparent text-black border-black' : 'bg-[#F1EFEB] text-[#0A0A0B] border-black/10'}`}>
-        <div className="max-w-[1400px] mx-auto">
+      <section id="about" className={`px-10 py-[120px] relative border-b overflow-hidden ${inverted ? 'bg-transparent text-black border-black' : 'bg-[#F1EFEB] text-[#0A0A0B] border-black/10'}`}>
+        {inverted && (
+          <div aria-hidden="true" className="absolute inset-0 pointer-events-none bg-[size:16px_16px] bg-[linear-gradient(rgba(0,0,0,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(0,0,0,0.05)_1px,transparent_1px)]"></div>
+        )}
+        <div className="max-w-[1400px] mx-auto relative z-10">
           <div className={`flex items-baseline gap-8 mb-20 pb-8 border-b flex-wrap gsap-fade-up ${inverted ? 'border-black' : 'border-black/10'}`}>
             <div className={`font-mono text-[56px] font-medium tracking-tight leading-none ${inverted ? 'text-black' : 'text-[#CD3232]'}`}>01</div>
             <div className="flex-1 min-w-[240px]">
@@ -194,17 +195,17 @@ const PageContent = ({
                 </p>
                 <p className={`absolute top-0 left-0 w-full font-sans text-[24px] leading-[1.55] font-normal tracking-tight text-pretty`}>
                   <span className="about-typewriter-1" data-text="I am an Information Technology student and software developer bridging the gap between robust backend architectures and engaging frontend interfaces."></span>
-                  <span className="about-cursor-1 text-[#CD3232] opacity-0 ml-[2px]">_</span>
+                  <span className={`about-cursor-1 opacity-0 ml-[2px] ${inverted ? 'text-black' : 'text-[#CD3232]'}`}>_</span>
                 </p>
               </div>
-              
+
               <div className="relative mb-6">
                 <p className={`invisible font-sans text-[17px] leading-relaxed font-normal`}>
                   Whether I'm building real-time WebSocket auction platforms or cross-platform Flutter applications for Arsenal fans, I focus heavily on the underlying systems. A beautiful UI only matters if the data flows securely, rapidly, and predictably beneath it.
                 </p>
                 <p className={`absolute top-0 left-0 w-full font-sans text-[17px] leading-relaxed font-normal ${inverted ? 'text-black' : 'text-[#3A3A3D]'}`}>
                   <span className="about-typewriter-2" data-text="Whether I'm building real-time WebSocket auction platforms or cross-platform Flutter applications for Arsenal fans, I focus heavily on the underlying systems. A beautiful UI only matters if the data flows securely, rapidly, and predictably beneath it."></span>
-                  <span className="about-cursor-2 text-[#CD3232] opacity-0 ml-[2px]">_</span>
+                  <span className={`about-cursor-2 opacity-0 ml-[2px] ${inverted ? 'text-black' : 'text-[#CD3232]'}`}>_</span>
                 </p>
               </div>
 
@@ -214,7 +215,7 @@ const PageContent = ({
                 </p>
                 <p className={`absolute top-0 left-0 w-full font-sans text-[17px] leading-relaxed font-normal ${inverted ? 'text-black' : 'text-[#3A3A3D]'}`}>
                   <span className="about-typewriter-3" data-text="Currently pursuing my B.Tech at Manipal University Jaipur while taking on complex development challenges and internships. I thrive in environments that require resource-heavy compilation, simulation, and modern web toolchains."></span>
-                  <span className="about-cursor-3 text-[#CD3232] opacity-0 ml-[2px]">_</span>
+                  <span className={`about-cursor-3 opacity-0 ml-[2px] ${inverted ? 'text-black' : 'text-[#CD3232]'}`}>_</span>
                 </p>
               </div>
             </div>
@@ -275,8 +276,8 @@ const PageContent = ({
               const toolsList = k.tools.split(', ');
 
               return (
-                <div 
-                  key={idx} 
+                <div
+                  key={idx}
                   className={`relative group border-b ${inverted ? 'border-black/10' : 'border-white/10'}`}
                   onMouseEnter={() => { if (!isOpen) onToggleSkill?.(idx); }}
                   onMouseLeave={() => { if (isOpen) onToggleSkill?.(idx); }}
@@ -432,13 +433,13 @@ const PageContent = ({
               <div className="flex justify-between items-center mb-4">
                 <h3 className={`font-sans font-black text-3xl lg:text-4xl tracking-tight ${inverted ? 'text-black' : 'text-[#F5F5F5]'}`}>Professional Work<span className={inverted ? 'text-black' : 'text-[#CD3232]'}>.</span></h3>
               </div>
-              
+
               <div className="flex-1 flex flex-col justify-center gap-8">
                 <a href="https://innocentkidsvalley.in/" target="_blank" rel="noopener noreferrer" className={`group flex flex-col gap-2 ${inverted ? 'text-black' : 'text-[#F5F5F5]'}`}>
                   <h3 className="font-sans font-bold text-xl md:text-2xl tracking-tight group-hover:text-[#CD3232] transition-colors">Innocent Kids Valley School ↗</h3>
                   <p className={`font-sans text-[15px] leading-relaxed m-0 ${inverted ? 'text-black/60' : 'text-[#F5F5F5]/60'}`}>Official preschool platform with scheduling & CMS.</p>
                 </a>
-                
+
                 <a href="https://endorphinsentertainment.endorphinstech.com/" target="_blank" rel="noopener noreferrer" className={`group flex flex-col gap-2 ${inverted ? 'text-black' : 'text-[#F5F5F5]'}`}>
                   <h3 className="font-sans font-bold text-xl md:text-2xl tracking-tight group-hover:text-[#CD3232] transition-colors">Endorphins Entertainment ↗</h3>
                   <p className={`font-sans text-[15px] leading-relaxed m-0 ${inverted ? 'text-black/60' : 'text-[#F5F5F5]/60'}`}>Corporate website rebuild with Next.js & Tailwind CSS.</p>
@@ -483,8 +484,8 @@ const PageContent = ({
                   <a href="tel:+917818074437" className={`font-sans text-lg font-medium tracking-tight transition-colors ${inverted ? 'text-black' : 'text-[#0A0A0B] hover:text-[#CD3232]'}`}>+91 7818074437</a>
                 </div>
                 <div className={`flex items-center justify-between py-5 border-b ${inverted ? 'border-black' : 'border-black/15'}`}>
-                  <span className={`font-mono text-[11px] tracking-[0.12em] uppercase ${inverted ? 'text-black' : 'text-[#0A0A0B]/50'}`}>Location</span>
-                  <span className="font-sans text-lg font-medium tracking-tight">Delhi / Jaipur, India</span>
+                  <span className={`font-mono text-[11px] tracking-[0.12em] uppercase ${inverted ? 'text-black' : 'text-[#0A0A0B]/50'}`}>Current Location</span>
+                  <span className="font-sans text-lg font-medium tracking-tight">NCR</span>
                 </div>
                 <div className={`flex items-center justify-between py-5 border-b ${inverted ? 'border-black' : 'border-black/15'}`}>
                   <span className={`font-mono text-[11px] tracking-[0.12em] uppercase ${inverted ? 'text-black' : 'text-[#0A0A0B]/50'}`}>Response time</span>
@@ -564,6 +565,7 @@ const PageContent = ({
 export default function Portfolio() {
   const containerRef = useRef<HTMLDivElement>(null);
   const maskRef = useRef<HTMLDivElement>(null);
+  const outlineRef = useRef<HTMLDivElement>(null);
   const tooltipRef = useRef<HTMLDivElement>(null);
   const [globalInverted, setGlobalInverted] = useState(false);
 
@@ -616,10 +618,11 @@ export default function Portfolio() {
 
     const contactEl = document.getElementById('contact');
     if (contactEl && maskRef.current) {
+      const targets = outlineRef.current ? [maskRef.current, outlineRef.current] : maskRef.current;
       if (targetY >= contactEl.offsetTop - 20) {
-        gsap.to(maskRef.current, { opacity: 0, duration: 0.3, overwrite: "auto" });
+        gsap.to(targets, { opacity: 0, duration: 0.3, overwrite: "auto" });
       } else {
-        gsap.to(maskRef.current, { opacity: 1, duration: 0.3, overwrite: "auto" });
+        gsap.to(targets, { opacity: 1, duration: 0.3, overwrite: "auto" });
       }
     }
 
@@ -643,11 +646,17 @@ export default function Portfolio() {
     const contactEl = document.getElementById('contact');
     const targetY = mousePos.current.clientY + window.scrollY;
     if (contactEl && targetY >= contactEl.offsetTop - 20) return;
-    if (maskRef.current) gsap.to(maskRef.current, { opacity: 1, duration: 0.3, overwrite: "auto" });
+    if (maskRef.current) {
+      const targets = outlineRef.current ? [maskRef.current, outlineRef.current] : maskRef.current;
+      gsap.to(targets, { opacity: 1, duration: 0.3, overwrite: "auto" });
+    }
   };
 
   const handleMouseLeave = () => {
-    if (maskRef.current) gsap.to(maskRef.current, { opacity: 0, duration: 0.3, overwrite: "auto" });
+    if (maskRef.current) {
+      const targets = outlineRef.current ? [maskRef.current, outlineRef.current] : maskRef.current;
+      gsap.to(targets, { opacity: 0, duration: 0.3, overwrite: "auto" });
+    }
   };
 
   // Lenis Smooth Scrolling
@@ -707,7 +716,7 @@ export default function Portfolio() {
       once: true,
       onEnter: () => {
         const tl = gsap.timeline();
-        
+
         // Paragraph 1
         const p1 = document.querySelector('.about-typewriter-1') as HTMLElement;
         const text1 = p1?.getAttribute('data-text') || "";
@@ -788,14 +797,6 @@ export default function Portfolio() {
     });
   }, { scope: containerRef });
   const [openSkillIdx, setOpenSkillIdx] = useState<number | null>(null);
-  const [showTooltip, setShowTooltip] = useState(true);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setShowTooltip(false);
-    }, 3000);
-    return () => clearTimeout(timer);
-  }, []);
 
   return (
     <div
@@ -814,9 +815,19 @@ export default function Portfolio() {
           onDotClick={() => setGlobalInverted(!globalInverted)}
           openSkillIdx={openSkillIdx}
           onToggleSkill={(idx) => setOpenSkillIdx(openSkillIdx === idx ? null : idx)}
-          showTooltip={showTooltip}
         />
       </div>
+
+      {/* Circle Outline */}
+      <div
+        ref={outlineRef}
+        className={`pointer-events-none absolute z-[25] transition-opacity duration-300 w-[300px] h-[300px] border-[1px] rounded-full -translate-x-1/2 -translate-y-1/2 ${globalInverted ? 'border-[#0A0A0B]/30' : 'border-black/50'}`}
+        style={{
+          opacity: 0,
+          left: 'var(--x, 50%)',
+          top: 'var(--y, 50%)'
+        }}
+      ></div>
 
       {/* Top Layer: Inverted Theme (Masked) */}
       <div
@@ -832,7 +843,6 @@ export default function Portfolio() {
           inverted={!globalInverted}
           openSkillIdx={openSkillIdx}
           onToggleSkill={(idx) => setOpenSkillIdx(openSkillIdx === idx ? null : idx)}
-          showTooltip={showTooltip}
           isMaskLayer={true}
         />
       </div>
