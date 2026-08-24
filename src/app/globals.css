@@ -27,7 +27,7 @@ body {
 
 @media (pointer: fine) {
   * {
-    cursor: none !important;
+    cursor: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgdmlld0JveD0iMCAwIDMyIDMyIj48cGF0aCBkPSJNNiA0IEw2IDI0IEwxMiAxOCBMMTYgMjYgTDE5IDI0IEwxNSAxNiBMMjIgMTYgWiIgZmlsbD0icmVkIiBzdHJva2U9ImJsYWNrIiBzdHJva2Utd2lkdGg9IjEuNSIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPjwvc3ZnPg==') 6 4, auto !important;
   }
 }
 

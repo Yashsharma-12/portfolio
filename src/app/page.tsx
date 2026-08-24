@@ -37,15 +37,27 @@ const familiar = ['Vercel AI SDK', 'Gemini API', 'WebSockets', 'GSAP', 'Figma'];
 
 const roles = [
   {
-    range: 'Jan 2026 — Present',
+    range: 'Aug 2026 — Present',
     duration: 'Current',
+    role: 'Full Stack Developer',
+    company: 'Endorphins Entertainment',
+    location: 'Noida, India',
+    mode: 'Full-Time',
+    bullets: [
+      'Own full-stack feature delivery end-to-end, designing REST APIs and database schemas (Node.js, Firebase, MySQL) alongside React.js/Next.js frontends, sustaining 99%+ uptime and Lighthouse scores above 90.',
+      'Cut time-to-market by 40% by embedding Claude CLI and Cursor into daily development workflows.'
+    ],
+    tags: ['React.js', 'Next.js', 'Node.js', 'Firebase', 'MySQL'],
+  },
+  {
+    range: 'Jan 2026 — Jul 2026',
+    duration: '7 mos',
     role: 'Frontend Developer Intern',
     company: 'Endorphins Entertainment',
     location: 'Noida, India',
     mode: 'Internship',
     bullets: [
-      'Develop and maintain production web platforms with React.js and Next.js, sustaining 99%+ uptime and Lighthouse scores above 90; reduced load latency 30% via component modularization.',
-      'Cut time-to-market by 40% by embedding Claude CLI and Cursor into daily development workflows.',
+      'Developed and maintained production web platforms with React.js and Next.js; reduced load latency 30% via component modularization.',
       "Beep Bop Boop (STEM Fest): Built official website for India's premier kids' STEM festival (beepbopboopfest.com) with secure payment gateway and event registration modules.",
       'Preschool Platform: Sole developer; built scheduling and content management features with an SEO strategy that grew organic traffic from zero.',
       'Endorphins Corporate: Rebuilt company website using Next.js and Tailwind CSS — sub-second load times, modern design system.',
@@ -91,7 +103,7 @@ const PageContent = ({
           <a href="#skills" className={`${inverted ? 'text-black' : 'text-[#F5F5F5]/60 hover:text-[#CD3232]'} transition-colors`}>Skills</a>
           <a href="#experience" className={`${inverted ? 'text-black' : 'text-[#F5F5F5]/60 hover:text-[#CD3232]'} transition-colors`}>Work</a>
           <a href="#projects" className={`${inverted ? 'text-black' : 'text-[#F5F5F5]/60 hover:text-[#CD3232]'} transition-colors`}>Projects</a>
-          <a href="https://drive.google.com/file/d/1vaZBF1HJIHY6UlvtesnqOxpB0GuhWVZP/view?usp=drive_link" target="_blank" rel="noopener noreferrer" className={`inline-flex items-center gap-2 px-4 py-2.5 border transition-all ${inverted ? 'border-black text-black' : 'border-[#CD3232] text-[#CD3232] hover:bg-[#CD3232] hover:text-white'}`}>
+          <a href="https://drive.google.com/file/d/1pdg5uT1whCskgeH9ysAPpL3PNWSpAvjY/view?usp=drive_link" target="_blank" rel="noopener noreferrer" className={`inline-flex items-center gap-2 px-4 py-2.5 border transition-all ${inverted ? 'border-black text-black' : 'border-[#CD3232] text-[#CD3232] hover:bg-[#CD3232] hover:text-white'}`}>
             <span className="w-1.5 h-1.5 bg-current rounded-full animate-pulse"></span>
             Resume
           </a>
@@ -126,15 +138,13 @@ const PageContent = ({
 
           <h1 className={`font-sans font-black text-[clamp(56px,11vw,200px)] leading-[0.88] tracking-tight m-0 ${inverted ? 'text-black' : 'bg-gradient-to-r from-green-400 to-green-600 bg-clip-text text-transparent'}`}>
             YASH<br />
-            <span className={inverted ? 'text-black' : 'text-[#F5F5F5]/35'}>SHARMA</span><span id={onDotClick ? "easter-egg-dot" : undefined} onClick={onDotClick} className={`relative inline-block cursor-pointer ${inverted ? 'text-black' : 'text-[#CD3232]'}`}>.
-              {isMaskLayer && (
+            <span className={inverted ? 'text-black' : 'text-[#F5F5F5]/35'}>SHARMA</span><span id={onDotClick ? "easter-egg-dot" : undefined} onClick={onDotClick} className={`relative inline-block cursor-pointer group ${inverted ? 'text-black' : 'text-[#CD3232]'}`}>.
                 <div
-                  className={`absolute bottom-[15%] left-full ml-4 pointer-events-none z-[100] font-mono text-[11px] tracking-widest uppercase px-3 py-1.5 rounded-sm whitespace-nowrap transition-opacity duration-300 bg-black text-white`}
+                  className={`absolute bottom-[15%] left-full ml-4 pointer-events-none z-[100] font-mono text-[11px] tracking-widest uppercase px-3 py-1.5 rounded-sm whitespace-nowrap transition-opacity duration-300 opacity-0 group-hover:opacity-100 bg-black text-white`}
                 >
                   Click me
                   <div className={`absolute top-1/2 -left-1.5 -translate-y-1/2 w-0 h-0 border-t-[6px] border-b-[6px] border-r-[8px] border-t-transparent border-b-transparent border-r-black`}></div>
                 </div>
-              )}
             </span>
           </h1>
 
@@ -191,30 +201,30 @@ const PageContent = ({
             <div className="max-w-[720px]">
               <div className="relative mb-8">
                 <p className={`invisible font-sans text-[24px] leading-[1.55] font-normal tracking-tight text-pretty`}>
-                  I am an Information Technology student and software developer bridging the gap between robust backend architectures and engaging frontend interfaces.
+                  Full Stack Developer with hands-on experience shipping production React.js, Next.js, Node.js, and Flutter applications end-to-end, spanning frontend UI, backend architecture, and database design.
                 </p>
                 <p className={`absolute top-0 left-0 w-full font-sans text-[24px] leading-[1.55] font-normal tracking-tight text-pretty`}>
-                  <span className="about-typewriter-1" data-text="I am an Information Technology student and software developer bridging the gap between robust backend architectures and engaging frontend interfaces."></span>
+                  <span className="about-typewriter-1" data-text="Full Stack Developer with hands-on experience shipping production React.js, Next.js, Node.js, and Flutter applications end-to-end, spanning frontend UI, backend architecture, and database design."></span>
                   <span className={`about-cursor-1 opacity-0 ml-[2px] ${inverted ? 'text-black' : 'text-[#CD3232]'}`}>_</span>
                 </p>
               </div>
 
               <div className="relative mb-6">
                 <p className={`invisible font-sans text-[17px] leading-relaxed font-normal`}>
-                  Whether I'm building real-time WebSocket auction platforms or cross-platform Flutter applications for Arsenal fans, I focus heavily on the underlying systems. A beautiful UI only matters if the data flows securely, rapidly, and predictably beneath it.
+                  Work ranges from an AI-powered document-intelligence SaaS platform to a festival registration platform with secure payments powered by Razorpay. Cut plan-to-production time by 40% by embedding AI-assisted workflows (Claude CLI, Cursor) into daily development while sustaining 99%+ uptime and 90+ Lighthouse scores.
                 </p>
                 <p className={`absolute top-0 left-0 w-full font-sans text-[17px] leading-relaxed font-normal ${inverted ? 'text-black' : 'text-[#3A3A3D]'}`}>
-                  <span className="about-typewriter-2" data-text="Whether I'm building real-time WebSocket auction platforms or cross-platform Flutter applications for Arsenal fans, I focus heavily on the underlying systems. A beautiful UI only matters if the data flows securely, rapidly, and predictably beneath it."></span>
+                  <span className="about-typewriter-2" data-text="Work ranges from an AI-powered document-intelligence SaaS platform to a festival registration platform with secure payments powered by Razorpay. Cut plan-to-production time by 40% by embedding AI-assisted workflows (Claude CLI, Cursor) into daily development while sustaining 99%+ uptime and 90+ Lighthouse scores."></span>
                   <span className={`about-cursor-2 opacity-0 ml-[2px] ${inverted ? 'text-black' : 'text-[#CD3232]'}`}>_</span>
                 </p>
               </div>
 
               <div className="relative m-0">
                 <p className={`invisible font-sans text-[17px] leading-relaxed font-normal`}>
-                  Currently pursuing my B.Tech at Manipal University Jaipur while taking on complex development challenges and internships. I thrive in environments that require resource-heavy compilation, simulation, and modern web toolchains.
+                  Comfortable owning projects end-to-end across frontend, backend, and SEO on both web and mobile.
                 </p>
                 <p className={`absolute top-0 left-0 w-full font-sans text-[17px] leading-relaxed font-normal ${inverted ? 'text-black' : 'text-[#3A3A3D]'}`}>
-                  <span className="about-typewriter-3" data-text="Currently pursuing my B.Tech at Manipal University Jaipur while taking on complex development challenges and internships. I thrive in environments that require resource-heavy compilation, simulation, and modern web toolchains."></span>
+                  <span className="about-typewriter-3" data-text="Comfortable owning projects end-to-end across frontend, backend, and SEO on both web and mobile."></span>
                   <span className={`about-cursor-3 opacity-0 ml-[2px] ${inverted ? 'text-black' : 'text-[#CD3232]'}`}>_</span>
                 </p>
               </div>
@@ -493,8 +503,12 @@ const PageContent = ({
                 </div>
               </div>
             </div>
-
-            <ContactForm inverted={inverted} />
+            <div className="flex flex-col w-full">
+              <h3 className={`lg:hidden font-sans font-bold text-3xl tracking-tight mb-8 ${inverted ? 'text-black' : 'text-[#0A0A0B]'}`}>
+                Contact me
+              </h3>
+              <ContactForm inverted={inverted} />
+            </div>
           </div>
         </div>
       </section>
@@ -540,7 +554,7 @@ const PageContent = ({
             <div>
               <div className={`font-mono text-[11px] tracking-[0.12em] uppercase mb-4 ${inverted ? 'text-black' : 'text-[#F5F5F5]/40'}`}>Resources</div>
               <div className={`flex flex-col gap-2.5 font-sans text-[15px] ${inverted ? 'text-black' : 'text-[#F5F5F5]/75'}`}>
-                <a href="#" className={inverted ? 'hover:text-black/50' : 'hover:text-white'}>CV / Resume ↗</a>
+                <a href="https://drive.google.com/file/d/1pdg5uT1whCskgeH9ysAPpL3PNWSpAvjY/view?usp=drive_link" target="_blank" rel="noopener noreferrer" className={inverted ? 'hover:text-black/50' : 'hover:text-white'}>CV / Resume ↗</a>
               </div>
             </div>
           </div>
@@ -564,100 +578,7 @@ const PageContent = ({
 
 export default function Portfolio() {
   const containerRef = useRef<HTMLDivElement>(null);
-  const maskRef = useRef<HTMLDivElement>(null);
-  const outlineRef = useRef<HTMLDivElement>(null);
-  const tooltipRef = useRef<HTMLDivElement>(null);
   const [globalInverted, setGlobalInverted] = useState(false);
-
-  // Store the viewport coordinates to handle scroll updates
-  const mousePos = useRef({ clientX: 0, clientY: 0 });
-  const posProxy = useRef({ x: 0, y: 0 });
-  const dotPosCache = useRef({ x: 0, y: 0 });
-
-  // Cache dot position to avoid layout thrashing (getBoundingClientRect) on every mouse move
-  useEffect(() => {
-    const updateDotCache = () => {
-      const dot = document.getElementById('easter-egg-dot');
-      if (dot) {
-        const rect = dot.getBoundingClientRect();
-        dotPosCache.current = {
-          x: rect.left + window.scrollX + rect.width / 2,
-          y: rect.top + window.scrollY + rect.height / 2
-        };
-      }
-    };
-
-    updateDotCache();
-    window.addEventListener('resize', updateDotCache);
-    const timer = setTimeout(updateDotCache, 500); // Fallback for late font loading
-
-    return () => {
-      window.removeEventListener('resize', updateDotCache);
-      clearTimeout(timer);
-    };
-  }, [globalInverted]); // Re-cache when mode changes
-
-  const updateMaskPosition = () => {
-    if (!containerRef.current) return;
-
-    const targetX = mousePos.current.clientX;
-    const targetY = mousePos.current.clientY + window.scrollY;
-
-    // Tween a proxy object to prevent GSAP from reading computed styles (which causes lag/jank)
-    gsap.to(posProxy.current, {
-      x: targetX,
-      y: targetY,
-      duration: 1.0,
-      ease: "elastic.out(1.2, 0.2)",
-      overwrite: "auto",
-      onUpdate: () => {
-        containerRef.current?.style.setProperty('--x', `${posProxy.current.x}px`);
-        containerRef.current?.style.setProperty('--y', `${posProxy.current.y}px`);
-      }
-    });
-
-    const contactEl = document.getElementById('contact');
-    if (contactEl && maskRef.current) {
-      const targets = outlineRef.current ? [maskRef.current, outlineRef.current] : maskRef.current;
-      if (targetY >= contactEl.offsetTop - 20) {
-        gsap.to(targets, { opacity: 0, duration: 0.3, overwrite: "auto" });
-      } else {
-        gsap.to(targets, { opacity: 1, duration: 0.3, overwrite: "auto" });
-      }
-    }
-
-  };
-
-  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    mousePos.current = { clientX: e.clientX, clientY: e.clientY };
-    updateMaskPosition();
-  };
-
-  useEffect(() => {
-    const handleScroll = () => {
-      updateMaskPosition();
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  const handleMouseEnter = () => {
-    const contactEl = document.getElementById('contact');
-    const targetY = mousePos.current.clientY + window.scrollY;
-    if (contactEl && targetY >= contactEl.offsetTop - 20) return;
-    if (maskRef.current) {
-      const targets = outlineRef.current ? [maskRef.current, outlineRef.current] : maskRef.current;
-      gsap.to(targets, { opacity: 1, duration: 0.3, overwrite: "auto" });
-    }
-  };
-
-  const handleMouseLeave = () => {
-    if (maskRef.current) {
-      const targets = outlineRef.current ? [maskRef.current, outlineRef.current] : maskRef.current;
-      gsap.to(targets, { opacity: 0, duration: 0.3, overwrite: "auto" });
-    }
-  };
 
   // Lenis Smooth Scrolling
   useEffect(() => {
@@ -802,13 +723,10 @@ export default function Portfolio() {
     <div
       ref={containerRef}
       className={`font-sans min-h-screen relative selection:bg-[#CD3232] selection:text-white ${globalInverted ? 'bg-[#F1EFEB] text-[#0A0A0B]' : 'bg-[#0A0A0B] text-[#F5F5F5]'}`}
-      onMouseMove={handleMouseMove}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
     >
       <CustomCursor inverted={globalInverted} />
 
-      {/* Bottom Layer: Default Theme */}
+      {/* Main Content */}
       <div className="relative z-10 w-full min-h-screen flex flex-col">
         <PageContent
           inverted={globalInverted}
@@ -818,34 +736,6 @@ export default function Portfolio() {
         />
       </div>
 
-      {/* Circle Outline */}
-      <div
-        ref={outlineRef}
-        className={`pointer-events-none absolute z-[25] transition-opacity duration-300 w-[300px] h-[300px] border-[1px] rounded-full -translate-x-1/2 -translate-y-1/2 ${globalInverted ? 'border-[#0A0A0B]/30' : 'border-black/50'}`}
-        style={{
-          opacity: 0,
-          left: 'var(--x, 50%)',
-          top: 'var(--y, 50%)'
-        }}
-      ></div>
-
-      {/* Top Layer: Inverted Theme (Masked) */}
-      <div
-        ref={maskRef}
-        className={`pointer-events-none absolute inset-0 z-20 transition-opacity duration-300 w-full h-full ${globalInverted ? 'bg-[#0A0A0B]' : 'bg-[#CD3232]'}`}
-        style={{
-          opacity: 0,
-          maskImage: 'radial-gradient(circle 150px at var(--x, 50%) var(--y, 50%), black 100%, transparent 100%)',
-          WebkitMaskImage: 'radial-gradient(circle 150px at var(--x, 50%) var(--y, 50%), black 100%, transparent 100%)',
-        }}
-      >
-        <PageContent
-          inverted={!globalInverted}
-          openSkillIdx={openSkillIdx}
-          onToggleSkill={(idx) => setOpenSkillIdx(openSkillIdx === idx ? null : idx)}
-          isMaskLayer={true}
-        />
-      </div>
     </div>
   );
 }
